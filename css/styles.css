@@ -4,6 +4,11 @@
     margin: 0;
 }
 
+a {
+    text-decoration: none;
+    color: black;
+}
+
 @font-face {
     font-family: "Montserrat";
     src: url("../assets/fonts/montserrat.ttf");
@@ -34,7 +39,7 @@ body {
 }
 
 .start img {
-    width: 300px;
+    width: 250px;
     height: auto;
 }
 
@@ -164,14 +169,14 @@ main {
 .service {
     width: 60px;
     height: 60px;
-    border-radius: 15px;
+    border-radius: 10px;
     background-color: white;
     display: flex;
     align-items: center;
     flex-direction: column;
     padding: 5px;
     filter: drop-shadow(1px 1px 2px #000000);
-    margin: 10px;
+    margin: 5px;
     font-size: 10px;
     letter-spacing: -1px;
 }
@@ -187,6 +192,40 @@ main {
     color: var(--accent-color);
 }
 
+.news {
+    width: 100%;
+    margin: 0 auto;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+    display: flex;
+    flex-wrap: nowrap;
+    padding: 5px;
+}
+
+.insight {
+    width: 95%;
+    min-width: 95%;
+    height: 100px;
+    border-radius: 10px;
+    background-color: #adcde6;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    filter: drop-shadow(1px 1px 2px #000000);
+    margin: 0 10px;
+    scroll-snap-align: start;
+}
+
+.profile-insight {
+    background-color: #efc6c9;
+}
+
+.insight img {
+    width: 80px;
+    height: auto;
+    margin-right: 10px;
+}
+
 nav {
     position: fixed;
     bottom: 0;
@@ -199,6 +238,7 @@ nav {
     justify-content: space-around;
     align-items: center;
     padding: 5px;
+    padding-bottom: 20px;
     background-color: white;
 }
 
@@ -210,6 +250,11 @@ nav {
     width: 100px;
     padding: 5px;
     font-size: 14px;
+}
+
+nav a {
+    text-decoration: none;
+    color: grey;
 }
 
 .selector i {
