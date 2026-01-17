@@ -11,6 +11,7 @@ a {
 
 @font-face {
     font-family: "Montserrat";
+    letter-spacing: -0.5px;
     src: url("../assets/fonts/montserrat.ttf");
 }
 
@@ -22,6 +23,7 @@ a {
 body {
     padding: 10px;
     font-family: var(--font);
+    width: 100vw;
 }
 
 .start {
@@ -100,7 +102,7 @@ main {
 .alert {
     width: 90%;
     height: auto;
-    filter: drop-shadow(1px 1px 2px #000000);
+    filter: drop-shadow(1px 1px 1px #959595);
     border-radius: 10px;
     margin: 0 auto;
     position: relative;
@@ -129,7 +131,7 @@ main {
 .credentials {
     width: 90%;
     height: auto;
-    filter: drop-shadow(1px 1px 2px #000000);
+    filter: drop-shadow(1px 1px 1px #959595);
     border-radius: 10px;
     margin: 0 auto;
     position: relative;
@@ -175,7 +177,7 @@ main {
     align-items: center;
     flex-direction: column;
     padding: 5px;
-    filter: drop-shadow(1px 1px 2px #000000);
+    filter: drop-shadow(1px 1px 1px #959595);
     margin: 5px;
     font-size: 10px;
     letter-spacing: -1px;
@@ -211,7 +213,7 @@ main {
     display: flex;
     align-items: center;
     padding: 10px;
-    filter: drop-shadow(1px 1px 2px #000000);
+    filter: drop-shadow(1px 1px 1px #959595);
     margin: 0 10px;
     scroll-snap-align: start;
 }
