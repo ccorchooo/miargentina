@@ -21,9 +21,8 @@ a {
 }
 
 body {
-    padding: 10px;
     font-family: var(--font);
-    width: 100vw;
+    overflow-x: hidden;
 }
 
 .start {
@@ -239,7 +238,7 @@ nav {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    padding: 5px 0px;
+    padding: 5px;
     padding-bottom: 20px;
     background-color: white;
 }
