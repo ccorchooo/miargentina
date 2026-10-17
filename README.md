@@ -36,11 +36,13 @@ Los cambios sin guardar tienen confirmación al navegar a otra sección o cerrar
 ## Qué incluye
 
 - Diseño adaptable a celular, tablet y escritorio.
-- Cabecera azul, accesos circulares y navegación inferior.
+- Cabecera violeta con saludo y esquinas inferiores redondeadas.
+- Inicio basado en la captura de referencia: aviso, tarjeta de turnos, panel verde y ocho accesos cuadrados en una grilla de cuatro columnas.
+- Navegación inferior con cuatro accesos. Documentos y Salud se abren desde Inicio o desde el menú.
 - Tres pantallas y menú de navegación.
 - Ficha de identidad de muestra, con número prefijado `DEMO`, marca de agua y leyenda de falta de validez.
 - Listas desplegables de datos personales y salud.
-- Editor de perfil, validación de campos y vista previa en escritorio.
+- Editor de perfil, validación de campos y vista previa de la ficha.
 - Carga, procesamiento y eliminación de foto.
 - Persistencia local con mensaje de error cuando el navegador no puede guardar.
 - Diálogos accesibles, navegación por teclado, foco visible y soporte de movimiento reducido.
@@ -71,3 +73,5 @@ No cargues una foto completa de un DNI; el selector está pensado para un retrat
 Borrar los datos del sitio en el navegador también elimina el perfil. Si el almacenamiento está bloqueado o lleno, la app lo informa y permite continuar solo en memoria durante esa sesión.
 
 La app es una web, no un APK ni una aplicación nativa de iOS. Los enlaces `#inicio`, `#documentos` y `#salud` permiten abrir directamente cada sección.
+
+La interfaz mantiene el ancho de una aplicación móvil también en escritorio. Los accesos que exceden Inicio, Documentos y Salud abren una explicación del alcance de la demo. No muestran datos de servicios públicos reales.

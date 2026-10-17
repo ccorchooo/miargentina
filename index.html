@@ -3,31 +3,36 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#0072bb">
+  <meta name="theme-color" content="#362fc1">
   <meta name="description" content="Demostración local de una aplicación de documentos y salud. Sin validez oficial.">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
   <title>Mi espacio · Demo</title>
   <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="styles.css">
-  <script src="app.js" defer></script>
+  <link rel="stylesheet" href="styles.css?v=1.1">
+  <script src="app.js?v=1.1" defer></script>
 </head>
 <body>
+  <div class="app-shell">
   <a class="skip-link" href="#main">Ir al contenido</a>
+  <div class="demo-ribbon">DEMOSTRACIÓN INDEPENDIENTE · SIN VALIDEZ OFICIAL</div>
   <header class="app-header">
     <div class="header-inner">
       <button id="menu-button" class="icon-button" aria-label="Abrir menú" aria-haspopup="dialog"></button>
       <a href="#inicio" class="brand" aria-label="Mi espacio, inicio"><span class="brand-mi">mi</span>espacio<span class="brand-demo">DEMO</span></a>
+      <h1 id="header-page-title" hidden></h1>
       <button id="profile-button" class="header-avatar" aria-label="Editar mi perfil"></button>
+      <button id="more-button" class="icon-button" aria-label="Abrir menú de secciones" aria-haspopup="dialog" hidden></button>
     </div>
+    <p id="header-greeting" class="header-greeting"></p>
   </header>
-  <div class="demo-ribbon"><span class="demo-dot"></span>Demostración independiente · Sin validez oficial</div>
   <p id="storage-warning" class="storage-warning" hidden role="status"></p>
   <main id="main" tabindex="-1"></main>
   <nav class="bottom-nav" aria-label="Navegación principal">
     <div class="nav-inner">
       <a href="#inicio" data-route="inicio"><span class="nav-icon" data-icon="home"></span><span>Inicio</span></a>
-      <a href="#documentos" data-route="documentos"><span class="nav-icon" data-icon="document"></span><span>Mis documentos</span></a>
-      <a href="#salud" data-route="salud"><span class="nav-icon" data-icon="heart"></span><span>Mi salud</span></a>
+      <button data-action="scope" data-label="Novedades"><span class="nav-icon" data-icon="news"></span><span>Novedades</span></button>
+      <button data-action="scope" data-label="Teléfonos"><span class="nav-icon" data-icon="phone"></span><span>Teléfonos</span></button>
+      <button data-action="about"><span class="nav-icon" data-icon="help"></span><span>Ayuda</span></button>
     </div>
   </nav>
   <dialog id="app-dialog" aria-labelledby="dialog-title">
@@ -36,5 +41,6 @@
   </dialog>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
   <noscript><p class="noscript">Activá JavaScript en tu navegador para usar la demostración.</p></noscript>
+  </div>
 </body>
 </html>

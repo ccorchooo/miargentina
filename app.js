@@ -12,6 +12,16 @@
   });
   const icons = {
     menu: '<path d="M4 6h16M4 12h16M4 18h16"/>',
+    back: '<path d="m11 4-8 8 8 8M3 12h18"/>',
+    more: '<circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/>',
+    car: '<path d="m3 14 1-5 4-1 3-4h7l3 7v6h-3M7 17h7M3 14v3h1"/><circle cx="6" cy="17" r="2"/><circle cx="16" cy="17" r="2"/>',
+    work: '<rect x="3" y="7" width="18" height="14" rx="2"/><path d="M8 7V4h8v3M3 12l9 3 9-3M10 14v3h4v-3"/>',
+    money: '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M12 6v12M15 9c-1-2-6-2-6 1s6 1 6 4-5 3-6 1"/>',
+    file: '<path d="M5 2h9l5 5v15H5ZM14 2v6h5M8 12h8M8 16h8"/>',
+    ticket: '<path d="M6 2a6 6 0 0 0 12 0h3v20h-3a6 6 0 0 0-12 0H3V2Z"/><path d="M8 9h8M8 15h8M9 11v2M12 11v2M15 11v2"/>',
+    family: '<circle cx="8" cy="7" r="3"/><circle cx="18" cy="8" r="3"/><path d="M1 22v-3a7 7 0 0 1 14 0v3M16 15a6 6 0 0 1 7 6v1"/>',
+    news: '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 7h10M7 11h4v6H7ZM14 11h3M14 14h3M14 17h3"/>',
+    help: '<path d="M4 5h16v13H9l-5 4ZM12 5V2M9 2h6M7 9v3M17 9v3M9 15h6"/>',
     home: '<path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1Z"/>',
     document: '<rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8" cy="10" r="1.5"/><path d="M5.5 15c.3-2.8 4.7-2.8 5 0M13 9h5M13 12h5M13 15h3"/>',
     heart: '<path d="M20.8 4.8a5.4 5.4 0 0 0-7.6 0L12 6l-1.2-1.2a5.4 5.4 0 0 0-7.6 7.6L12 21l8.8-8.6a5.4 5.4 0 0 0 0-7.6Z"/><path d="M4 12h4l2-4 4 8 2-4h4"/>',
@@ -50,6 +60,7 @@
   let navigationTarget = null;
   let dialogKind = '';
   let storageAvailable = true;
+  let noticeDismissed = false;
 
   // Only permit photo data produced by this app, never arbitrary URLs or SVG.
   function isSafePhoto(value) {
@@ -133,18 +144,19 @@
   }
 
   function renderHome() {
-    return `<div class="welcome"><div class="welcome-avatar">${avatar(profile)}</div><div><p class="eyebrow">Tu espacio personal</p><h1>Hola, ${escape(profile.firstName.split(' ')[0])}</h1><span class="local-pill">${icon('shield')} Perfil de demostración</span></div></div>
-      <div class="home-layout">
-        <section aria-labelledby="services-title"><h2 id="services-title" class="section-heading">¿Qué necesitás hacer?</h2>
-          <div class="service-grid"><a href="#documentos" class="service-tile"><span class="service-circle cyan">${icon('document')}</span>Mis documentos</a><a href="#salud" class="service-tile"><span class="service-circle pink">${icon('heart')}</span>Mi salud</a></div>
-          <button class="shortcut-row" data-action="edit-profile">${icon('edit')}<span><strong>Editar mis datos</strong><small>Personalizá tu ficha y tu foto</small></span>${icon('arrow')}</button>
-        </section>
-        <section aria-labelledby="featured-title"><h2 id="featured-title" class="section-heading">Tu documentación</h2>
-          <div class="card feature-card"><div class="feature-card-top">${icon('document')}<div><h3>Tu ficha, siempre a mano</h3><p>Consultá tus datos en un solo lugar</p></div></div>
-          <div class="feature-card-body"><div class="feature-profile"><div class="small-avatar">${avatar(profile)}</div><div><strong>${escape(fullName(profile))}</strong><p>DEMO · ${escape(docNumber(profile))}</p></div></div><button class="button full" data-action="view-document">${icon('eye')}Ver ficha de demostración</button></div></div>
-        </section>
-      </div>
-      <div class="info-note home-note">${icon('info')}<p>Esta es una demo independiente inspirada en una app de servicios. Los datos se guardan en este navegador. <button class="inline-link" data-action="about">Conocer más</button></p></div>`;
+    const services = [
+      ['Documentos','document','documentos'], ['Vehículos','car'], ['Trabajo','work'], ['Salud','heart','salud'],
+      ['Cobros','money'], ['Trámites','file'], ['Turnos','ticket'], ['Hijos','family']
+    ];
+    return `<div class="welcome home-content"><h1 class="sr-only">Inicio</h1>
+      ${noticeDismissed ? '' : `<section class="notice-card"><button class="notice-close icon-button" data-action="dismiss-notice" aria-label="Cerrar aviso">${icon('close')}</button><h2>Completá tu perfil: cargá tus datos y tu foto</h2><p>Desde Salud podés actualizar tu información. Después, consultá tu ficha de prueba en Documentos.</p></section>`}
+      <section class="appointment-card card"><span class="appointment-illustration">${icon('ticket')}</span><div><h2>No tenés turnos programados</h2><button class="button small-button" data-action="scope" data-label="Turnos">Ver turnos</button></div></section>
+      <button class="credential-banner" data-action="nav-documents"><strong>Tu ficha de demostración<br>está lista para consultar</strong><span class="credential-art" aria-hidden="true"><span class="credential-paper">${icon('document')}</span><span class="credential-check">${icon('check')}</span></span></button>
+      <section class="home-services" aria-labelledby="services-title"><h2 id="services-title">¿Qué necesitás hoy?</h2><div class="service-grid">${services.map(([label,symbol,target])=>target ? `<a class="service-tile" href="#${target}" aria-label="${target==='salud'?'Mi salud':'Mis documentos'}"><span>${icon(symbol)}</span><span>${label}</span></a>` : `<button class="service-tile" data-action="scope" data-label="${label}" aria-label="${label}, fuera del alcance de la demo"><span>${icon(symbol)}</span><span>${label}</span></button>`).join('')}</div></section>
+      <button class="profile-promo" data-action="edit-profile"><span class="profile-art" aria-hidden="true">${icon('user')}</span><span><strong>Completá tu perfil</strong><small>Mantené tus datos de prueba actualizados.</small><b>Editar mis datos ${icon('arrow')}</b></span></button>
+      <button class="home-document-link" data-action="view-document">${icon('document')} Ver mi ficha de demostración ${icon('arrow')}</button>
+      <p class="home-footnote">Demo independiente. Los datos se guardan en este navegador.</p>
+      </div>`;
   }
 
   function documentRow(id, title, sub, symbol, color, content, expanded = false) {
@@ -156,10 +168,9 @@
   }
 
   function renderDocuments() {
-    return `<div class="page-intro"><p class="eyebrow">Tu espacio</p><h1>Mis documentos</h1><p>Consultá la información de tu perfil de prueba.</p></div>
-      <div class="documents-banner">${icon('document')}<div><h2>Tus datos, en un solo lugar</h2><p>Se actualizan con los cambios que guardás en Mi salud.</p></div></div>
+    return `<div class="section-lead card"><h2>Tus documentos, en un solo lugar</h2><p>Consultá tus datos personales y tu ficha de demostración.</p></div>
       <div class="document-list">
-      ${documentRow('identity', 'DNI · demostración', 'Ficha personal de prueba', 'document', 'cyan', `<div class="document-person"><strong>${escape(fullName(profile))}</strong><span class="demo-tag">SOLO DEMO</span></div>${sampleCard()}<p class="updated-at">${escape(updatedText())}</p><div class="document-actions"><button class="button" data-action="view-document">${icon('eye')}Ampliar ficha</button><button class="button secondary" data-action="edit-profile">${icon('edit')}Editar datos</button></div>`, true)}
+      ${documentRow('identity', 'Documento de identidad', 'Muestra editable · Sin validez oficial', 'document', 'cyan', `<div class="document-person"><strong>${escape(fullName(profile))}</strong><span class="demo-tag">SOLO DEMO</span></div>${sampleCard()}<p class="updated-at">${escape(updatedText())}</p><div class="document-actions"><button class="button" data-action="view-document">${icon('eye')}Ampliar ficha</button><button class="button secondary" data-action="edit-profile">${icon('edit')}Editar datos</button></div>`)}
       ${documentRow('personal', 'Datos personales', 'Domicilio y datos de tu perfil', 'user', 'purple', `${detailsList([['Nombre completo',fullName(profile)],['Nacimiento',formatDate(profile.birthDate)],['Nacionalidad',profile.nationality],['Domicilio',profile.address],['Localidad',profile.city],['Provincia',profile.province]])}<div class="document-actions"><button class="button secondary" data-action="edit-profile">Editar mis datos</button></div>`)}
       ${documentRow('medical', 'Ficha de salud', 'Información que agregaste en Mi salud', 'heart', 'pink', `${detailsList([['Grupo sanguíneo',profile.bloodType],['Cobertura',profile.coverage],['Alergias',profile.allergies],['Contacto de emergencia',profile.emergencyName],['Teléfono',profile.emergencyPhone]])}<div class="document-actions"><button class="button secondary" data-action="edit-medical">Editar datos de salud</button></div>`)}
       </div>
@@ -209,15 +220,25 @@
   }
 
   function renderHealth() {
-    return `<div class="page-intro"><p class="eyebrow">Tu espacio</p><h1>Mi salud</h1><p>Completá tu perfil y actualizá la ficha de Mis documentos.</p></div><div class="tab-bar" role="tablist" aria-label="Secciones de Mi salud"><button id="tab-datos" class="tab-button" role="tab" data-action="health-tab" data-tab="datos" aria-controls="health-panel" aria-selected="${healthTab==='datos'}" tabindex="${healthTab==='datos'?0:-1}">Editar mis datos</button><button id="tab-resumen" class="tab-button" role="tab" data-action="health-tab" data-tab="resumen" aria-controls="health-panel" aria-selected="${healthTab==='resumen'}" tabindex="${healthTab==='resumen'?0:-1}">Mi ficha de salud</button></div><section id="health-panel" role="tabpanel" aria-labelledby="tab-${healthTab}">${healthTab==='datos' ? renderEditor() : renderMedical()}</section>`;
+    return `<div class="section-lead card health-lead">${icon('heart')}<div><h2>Tu información personal y de salud</h2><p>Los cambios que guardes se verán en Documentos.</p></div></div><div class="tab-bar" role="tablist" aria-label="Secciones de Mi salud"><button id="tab-datos" class="tab-button" role="tab" data-action="health-tab" data-tab="datos" aria-controls="health-panel" aria-selected="${healthTab==='datos'}" tabindex="${healthTab==='datos'?0:-1}">Editar mis datos</button><button id="tab-resumen" class="tab-button" role="tab" data-action="health-tab" data-tab="resumen" aria-controls="health-panel" aria-selected="${healthTab==='resumen'}" tabindex="${healthTab==='resumen'?0:-1}">Mi ficha de salud</button></div><section id="health-panel" role="tabpanel" aria-labelledby="tab-${healthTab}">${healthTab==='datos' ? renderEditor() : renderMedical()}</section>`;
   }
 
   function render({focus=false} = {}) {
+    document.body.dataset.page=route;
     main.innerHTML = route==='documentos' ? renderDocuments() : route==='salud' ? renderHealth() : renderHome();
     $('#profile-button').innerHTML = avatar(profile);
+    const isHome=route==='inicio';
+    $('.brand').hidden=!isHome;
+    $('#profile-button').hidden=!isHome;
+    $('#more-button').hidden=isHome;
+    $('#header-page-title').hidden=isHome;
+    $('#header-page-title').textContent=route==='documentos'?'Documentos':'Salud';
+    $('#header-greeting').hidden=!isHome;
+    $('#header-greeting').textContent=`¡Hola ${profile.firstName}!`;
+    $('#menu-button').innerHTML=icon(isHome?'menu':'back');
+    $('#menu-button').setAttribute('aria-label',isHome?'Abrir menú':'Volver al inicio');
     document.querySelectorAll('[data-route]').forEach(link => {
-      if (link.dataset.route===route) link.setAttribute('aria-current','page');
-      else link.removeAttribute('aria-current');
+      link.setAttribute('aria-current',isHome?'page':'location');
     });
     document.title = `${({inicio:'Inicio',documentos:'Mis documentos',salud:'Mi salud'})[route]} · Mi espacio DEMO`;
     if (focus) main.focus({preventScroll:true});
@@ -228,6 +249,7 @@
     $('#dialog-title').textContent = title;
     dialogBody.innerHTML = body;
     dialogKind = kind;
+    dialog.dataset.kind=kind;
     dialog.showModal();
     document.body.classList.add('modal-open');
   }
@@ -372,7 +394,7 @@
     openDialog('Ficha de demostración',`<div class="document-person"><strong>${escape(fullName(profile))}</strong><span class="demo-tag">SOLO DEMO</span></div>${sampleCard()}<p class="updated-at">${escape(updatedText())}</p><div class="info-note below-note">${icon('info')}<p>Esta ficha no es un DNI. Es una muestra sin validez oficial.</p></div><div class="dialog-actions"><button class="button secondary" data-action="edit-profile">${icon('edit')}Editar datos</button><button class="button" data-action="close-dialog">Listo</button></div>`,'document');
   }
   function showMenu() {
-    openDialog('Mi espacio',`<div class="menu-links"><button data-action="nav-home">${icon('home')}Inicio</button><button data-action="nav-documents">${icon('document')}Mis documentos</button><button data-action="edit-profile">${icon('heart')}Mi salud</button></div><div class="menu-divider"></div><div class="menu-links"><button data-action="about">${icon('info')}Acerca de esta demo</button><button data-action="reset">${icon('refresh')}Restablecer datos de ejemplo</button></div><p class="menu-meta">Mi espacio · Versión 1.0 · Demo independiente</p>`,'menu');
+    openDialog('Mi espacio · DEMO',`<div class="menu-profile"><span class="menu-avatar">${avatar(profile)}</span><strong>${escape(fullName(profile))}</strong><small>Perfil de demostración</small></div><div class="menu-links"><button data-action="nav-home">${icon('home')}Inicio</button><button data-action="nav-documents">${icon('document')}Mis documentos</button><button data-action="nav-health">${icon('heart')}Mi salud</button></div><div class="menu-divider"></div><div class="menu-links"><button data-action="about">${icon('info')}Acerca de esta demo</button><button data-action="reset">${icon('refresh')}Restablecer datos de ejemplo</button></div><p class="menu-meta">Versión 1.1 · Demo independiente</p>`,'menu');
   }
   function showAbout() {
     openDialog('Acerca de esta demo',`<div class="dialog-copy"><p><strong>Mi espacio</strong> es una demostración independiente inspirada en patrones visuales de apps de servicios públicos. No está afiliada a Mi Argentina ni a organismos públicos.</p><p>Probá los cambios en <strong>Mi salud → Editar mis datos</strong>, guardalos y consultá el resultado en <strong>Mis documentos</strong>.</p><p>Todo funciona localmente. No hay cuentas, validación de identidad, conexión a RENAPER ni envío de datos a servidores. Los campos y las fotos se guardan en el almacenamiento de este navegador, sin cifrado.</p><p>La ficha siempre se identifica como muestra, sin validez oficial. Para borrar la información guardada, usá “Restablecer datos de ejemplo” en el menú.</p></div><div class="dialog-actions"><button class="button" data-action="close-dialog">Entendido</button></div>`,'about');
@@ -386,6 +408,9 @@
     'close-dialog':closeDialog,
     'nav-home':()=>{closeDialog();navigate('inicio');},
     'nav-documents':()=>{closeDialog();navigate('documentos');},
+    'nav-health':()=>{closeDialog();navigate('salud');},
+    'dismiss-notice':()=>{noticeDismissed=true;render();},
+    'scope':button=>openDialog(button.dataset.label||'Servicios',`<div class="dialog-copy"><p>Este acceso forma parte de la pantalla de inicio de referencia. Esta demostración incluye <strong>Inicio, Documentos y Salud</strong>.</p><p>Podés editar tus datos y tu foto desde Salud y consultar la ficha de prueba en Documentos.</p></div><div class="dialog-actions"><button class="button secondary" data-action="nav-documents">Documentos</button><button class="button" data-action="edit-profile">Ir a Salud</button></div>`,'scope'),
     'toggle-document':(button)=>{const open=button.getAttribute('aria-expanded')==='true';button.setAttribute('aria-expanded',String(!open));document.getElementById(button.getAttribute('aria-controls')).hidden=open;},
     'health-tab':(button)=>{navigate('salud',button.dataset.tab);},
     'upload-photo':()=>$('#photo-input').click(),
@@ -430,7 +455,9 @@
     navigate('salud',next);requestAnimationFrame(()=>$(`#tab-${healthTab}`)?.focus());
   });
   $('#menu-button').innerHTML=icon('menu');
-  $('#menu-button').addEventListener('click',showMenu);
+  $('#menu-button').addEventListener('click',()=>route==='inicio'?showMenu():navigate('inicio'));
+  $('#more-button').innerHTML=icon('more');
+  $('#more-button').addEventListener('click',showMenu);
   $('#profile-button').addEventListener('click',()=>navigate('salud','datos'));
   $('#dialog-close').innerHTML=icon('close');
   $('#dialog-close').addEventListener('click',closeDialog);
