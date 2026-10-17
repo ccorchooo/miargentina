@@ -1,110 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="es-AR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <title>Mi Argentina</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0072bb">
+  <meta name="description" content="Demostración local de una aplicación de documentos y salud. Sin validez oficial.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <title>Mi espacio · Demo</title>
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
 </head>
 <body>
-    <header>
-        <div>
-            <i class="fa-solid fa-bars"></i>
-            <img src="assets/img/logo.png" alt="Mi Argentina Logo">
-            <i class="fa-solid fa-circle-user"></i>
-        </div>
-        <p>¡Hola Augusto Melillo!</p>
-    </header>
-    <main>
-        <div class="start">
-            <img src="assets/img/logo.png" alt="Inicio">
-        </div>
-        <div class="alert">
-            <h3>Tapá tanques y eliminá el agua</h3>
-            <p>Mantené tapados los tanques de agua y asegurate de que estén bien cubiertos. Eliminá el agua acumulada de las canaletas y tirá agua hirviendo en rejillas y desagües. Más información en argentina.gob.ar/dengue</p>
-            <i class="fa-solid fa-xmark"></i>
-        </div>
-        <div class="credentials">
-            <h3>¡Todas tus credenciales están al día!</h3>
-            <img src="assets/img/credentials.png" alt="Credentials">
-        </div>
-        <div class="services">
-            <h2>¿Qué necesitas hoy?</h2>
-            <div>
-                <a href="documentos.html">
-                    <div class="service">
-                        <i class="fa-regular fa-address-card"></i>
-                        <p>Documentos</p>
-                    </div>
-                </a>
-                <div class="service">
-                    <i class="fa-solid fa-car-side"></i>
-                    <p>Vehículos</p>
-                </div>
-                <div class="service">
-                    <i class="fa-solid fa-suitcase"></i>
-                    <p>Trabajo</p>
-                </div>
-                <div class="service">
-                    <i class="fa-regular fa-heart"></i>
-                    <p>Salud</p>
-                </div>
-                <div class="service">
-                    <i class="fa-solid fa-money-bill"></i>
-                    <p>Cobros</p>
-                </div>
-                <div class="service">
-                    <i class="fa-regular fa-file-lines"></i>
-                    <p>Trámites</p>
-                </div>
-                <div class="service">
-                    <i class="fa-solid fa-ticket"></i>
-                    <p>Turnos</p>
-                </div>
-                <div class="service">
-                    <i class="fa-solid fa-user-group"></i>
-                    <p>Hijos</p>
-                </div>
-            </div>
-        </div>
-        <div class="news">
-            <div class="insight">
-                <img src="assets/img/holiday.png" alt="Holidays">
-                <div>
-                    <p>Próximo feriado</p>
-                    <h3>3 de marzo</h3>
-                    <p>Se celebra Carnaval.</p>
-                </div>
-            </div>
-            <div class="insight profile-insight">
-                <img src="assets/img/profile.png" alt="Profile">
-                <div>
-                    <h3>Completá tu perfil</h3>
-                    <p>Mantené todos tus datos en un solo lugar.</p>
-                </div>
-            </div>
-        </div>
-    </main>
-    <nav>
-        <div class="selector selected">
-            <i class="fa-solid fa-house"></i>
-            <p>Inicio</p>
-        </div>
-        <div class="selector">
-            <i class="fa-solid fa-newspaper"></i>
-            <p>Novedades</p>
-        </div>
-        <div class="selector">
-            <i class="fa-solid fa-phone-volume"></i>
-            <p>Teléfonos</p>
-        </div>
-        <a href="https://wa.link/42czb2" target="_blank">
-            <div class="selector">
-                <img src="assets/img/tina.png" alt="Tina">
-                <p>Tina</p>
-            </div>
-        </a>
-    </nav>
+  <a class="skip-link" href="#main">Ir al contenido</a>
+  <header class="app-header">
+    <div class="header-inner">
+      <button id="menu-button" class="icon-button" aria-label="Abrir menú" aria-haspopup="dialog"></button>
+      <a href="#inicio" class="brand" aria-label="Mi espacio, inicio"><span class="brand-mi">mi</span>espacio<span class="brand-demo">DEMO</span></a>
+      <button id="profile-button" class="header-avatar" aria-label="Editar mi perfil"></button>
+    </div>
+  </header>
+  <div class="demo-ribbon"><span class="demo-dot"></span>Demostración independiente · Sin validez oficial</div>
+  <p id="storage-warning" class="storage-warning" hidden role="status"></p>
+  <main id="main" tabindex="-1"></main>
+  <nav class="bottom-nav" aria-label="Navegación principal">
+    <div class="nav-inner">
+      <a href="#inicio" data-route="inicio"><span class="nav-icon" data-icon="home"></span><span>Inicio</span></a>
+      <a href="#documentos" data-route="documentos"><span class="nav-icon" data-icon="document"></span><span>Mis documentos</span></a>
+      <a href="#salud" data-route="salud"><span class="nav-icon" data-icon="heart"></span><span>Mi salud</span></a>
+    </div>
+  </nav>
+  <dialog id="app-dialog" aria-labelledby="dialog-title">
+    <div class="dialog-header"><h2 id="dialog-title"></h2><button id="dialog-close" class="icon-button" aria-label="Cerrar ventana"></button></div>
+    <div id="dialog-body"></div>
+  </dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <noscript><p class="noscript">Activá JavaScript en tu navegador para usar la demostración.</p></noscript>
 </body>
 </html>
